@@ -31,17 +31,6 @@ public_users.post("/register", async (req, res) => {
     }
   });
 
-  // task 10
-//   public_users.get('/', (req, res) => {
-//     axios.get('http://localhost:5000')
-//         .then(response => {
-//             res.status(200).json({ message: response.data });
-//         })
-//         .catch(error => {
-//             res.status(500).json({ message: 'Internal server error' });
-//         });
-// });
-
 
 // Get book details based on ISBN
 public_users.get('/isbn/:isbn',function (req, res) {
@@ -99,19 +88,41 @@ public_users.get('/author/:author',function (req, res) {
 // task 12
 // public_users.get('/author/:author', (req, res) => {
 //     const author = req.params.author;
-//     axios.get('http://localhost:5000/author/${author}')
-//         .then(response => {
-//             const matchingBooks = response.data.filter(book => book.author === author);
-//             if (matchingBooks.length > 0) {
-//                 res.status(200).json({ message: 'Books retrieved successfully', data: matchingBooks });
-//             } else {
-//                 res.status(404).json({ message: 'No books found for the author' });
+//     const matchingBooks = [];
+
+//     // Promisified function to get books
+//     const getBooks = () => {
+//         return new Promise((resolve, reject) => {
+//             try {
+//                 for (const bookId in books) {
+//                     if (books.hasOwnProperty(bookId) && books[bookId].author === author) {
+//                         matchingBooks.push({ id: bookId, ...books[bookId] });
+//                     }
+//                 }
+
+//                 if (matchingBooks.length > 0) {
+//                     resolve(matchingBooks);
+//                 } else {
+//                     reject(new Error('No books found for the author'));
+//                 }
+//             } catch (error) {
+//                 reject(new Error('Internal server error'));
 //             }
+//         });
+//     };
+
+//     // Using Promise callbacks
+//     getBooks()
+//         .then(matchingBooks => {
+//             res.status(200).json({ message: 'Books retrieved successfully', data: matchingBooks });
 //         })
 //         .catch(error => {
-//             res.status(500).json({ message: 'Internal server error' });
+//             if (error.message === 'No books found for the author') {
+//                 res.status(404).json({ message: error.message });
+//             } else {
+//                 res.status(500).json({ message: error.message });
+//             }
 //         });
-// });
 
 // Get all books based on title
 public_users.get('/title/:title',function (req, res) {
